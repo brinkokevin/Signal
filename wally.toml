@@ -1,0 +1,9 @@
+[package]
+name = "brinkokevin/signal"
+description = "Typed Signal class"
+version = "0.1.0"
+license = "MIT"
+authors = ["brinkokevin"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+exclude = []
