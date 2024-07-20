@@ -12,15 +12,15 @@ export type Connection = {
 }
 
 export type Signal<T...> = {
-	fire: (self: Signal<T...>, T...) -> (),
-	connect: (self: Signal<T...>, (T...) -> ()) -> Connection,
+	fire: (T...) -> (),
+	connect: ((T...) -> ()) -> Connection,
 }
 
-local function new<T...>(): Signal<T...>
+local function new<T...>()
 	local connectionLinkedList: InternalConnection<T...>? = nil
 
 	return {
-		fire = function(_, ...: T...)
+		fire = function(...: T...)
 			local tempLinkedList = connectionLinkedList
 			while tempLinkedList do
 				if tempLinkedList.connected then
@@ -29,7 +29,7 @@ local function new<T...>(): Signal<T...>
 				tempLinkedList = tempLinkedList._next
 			end
 		end,
-		connect = function(_, fn: (T...) -> ())
+		connect = function(fn: (T...) -> ()): Connection
 			local connection: InternalConnection<T...> = {
 				connected = true,
 				_fn = fn,
